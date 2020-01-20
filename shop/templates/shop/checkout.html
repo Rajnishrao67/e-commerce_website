@@ -7,6 +7,15 @@
         <div class="my-4">
             <ul class="list-group" id="items">
             </ul>
+
+        <nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active mt-3" aria-current="page">your cart total is Rs: <span id="totalPrice">thanks for using cybertronium</span></li>
+  </ol>
+</nav>    
+
+
+            
         </div>
     </div>
     <div class="col my-4">
@@ -63,6 +72,7 @@ if (localStorage.getItem('cart') == null) {
 }
 console.log(cart);
 var sum = 0;
+var totalPrice = 0;
 if ($.isEmptyObject(cart)) {
     //if object is empty
     mystr = `<p>Your cart is empty, please add some items to your cart before checking out!</p>`
@@ -71,7 +81,9 @@ if ($.isEmptyObject(cart)) {
     for (item in cart) {
         let name = cart[item][1];
         let qty = cart[item][0];
+        let itemPrice = cart[item][2];
         sum = sum + qty;
+        totalPrice = totalPrice + qty *itemPrice
         mystr = `<li class="list-group-item d-flex justify-content-between align-items-center">
                     ${name}
                     <span class="badge badge-primary badge-pill">${qty}</span>
@@ -80,6 +92,7 @@ if ($.isEmptyObject(cart)) {
     }
 }
 document.getElementById('cart').innerHTML = sum;
+document.getElementById('totalPrice').innerHTML = totalPrice;
 $('#itemsJson').val(JSON.stringify(cart));
 {% if thank %}
 alert('Thanks for ordering with us. Your order is is {{id}}. Use it to track your order using our order tracker');
